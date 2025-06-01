@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Manage your customer relationships and data{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" style="--accent-color: #3b82f6;">
+        <div class="stat-header">
+            <span class="stat-title">Total Customers</span>
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ total_customers|default:"4" }}</div>
+        <div class="stat-change">Active customer accounts</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #10b981;">
+        <div class="stat-header">
+            <span class="stat-title">New Customers</span>
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fas fa-user-plus"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ new_customers|default:"1" }}</div>
+        <div class="stat-change">Recently registered</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #8b5cf6;">
+        <div class="stat-header">
+            <span class="stat-title">VIP Customers</span>
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ vip_customers|default:"1" }}</div>
+        <div class="stat-change">High-value customers</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f59e0b;">
+        <div class="stat-header">
+            <span class="stat-title">Total Revenue</span>
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+        <div class="stat-value">${{ total_revenue|default:"2502.49" }}</div>
+        <div class="stat-change">From all customers</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">Customer Directory</h2>
+            <p class="card-subtitle">Complete list of all registered customers</p>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 1rem; align-items: center;">
+            <div class="search-box" style="margin-bottom: 0;">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search customers..." value="{{ search_query }}">
+            </div>
+            <select class="form-input" style="width: auto;">
+                <option>All Segments</option>
+                <option>Regular</option>
+                <option>VIP</option>
+                <option>New</option>
+            </select>
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Add Customer
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Customer ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Location</th>
+                    <th>Total Orders</th>
+                    <th>Total Spent</th>
+                    <th>Segment</th>
+                    <th>Joined</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for customer in customers %}
+                <tr>
+                    <td>{{ customer.customer_id }}</td>
+                    <td>{{ customer.name }}</td>
+                    <td>{{ customer.email }}</td>
+                    <td>{{ customer.phone }}</td>
+                    <td>{{ customer.location }}</td>
+                    <td>{{ customer.total_orders }}</td>
+                    <td>${{ customer.total_spent }}</td>
+                    <td>
+                        {% if customer.segment == 'vip' %}
+                            <span class="badge badge-success">VIP</span>
+                        {% elif customer.segment == 'new' %}
+                            <span class="badge badge-warning">New</span>
+                        {% else %}
+                            <span class="badge badge-info">Regular</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ customer.joined_date|date:"m/d/Y" }}</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>CUST001</td>
+                    <td>John Doe</td>
+                    <td>john@example.com</td>
+                    <td>+1-555-0123</td>
+                    <td>New York, NY</td>
+                    <td>5</td>
+                    <td>$450.75</td>
+                    <td><span class="badge badge-info">Regular</span></td>
+                    <td>1/1/2024</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CUST002</td>
+                    <td>Jane Smith</td>
+                    <td>jane@example.com</td>
+                    <td>+1-555-0124</td>
+                    <td>Los Angeles, CA</td>
+                    <td>12</td>
+                    <td>$1250.99</td>
+                    <td><span class="badge badge-success">VIP</span></td>
+                    <td>12/15/2023</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>CUST003</td>
+                    <td>Bob Johnson</td>
+                    <td>bob@example.com</td>
+                    <td>+1-555-0125</td>
+                    <td>Chicago, IL</td>
+                    <td>2</td>
+                    <td>$125.50</td>
+                    <td><span class="badge badge-warning">New</span></td>
+                    <td>2/10/2024</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

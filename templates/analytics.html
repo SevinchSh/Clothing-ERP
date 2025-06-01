@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Comprehensive business insights and trends{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" style="--accent-color: #10b981;">
+        <div class="stat-header">
+            <span class="stat-title">Total Revenue</span>
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+        <div class="stat-value">${{ total_revenue|default:"45,231.89" }}</div>
+        <div class="stat-change" style="color: #10b981;">↗ +20.1% from last month</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #3b82f6;">
+        <div class="stat-header">
+            <span class="stat-title">Orders</span>
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        <div class="stat-value">+{{ total_orders|default:"2,350" }}</div>
+        <div class="stat-change" style="color: #10b981;">↗ +180.1% from last month</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #8b5cf6;">
+        <div class="stat-header">
+            <span class="stat-title">Products Sold</span>
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                <i class="fas fa-box"></i>
+            </div>
+        </div>
+        <div class="stat-value">+{{ products_sold|default:"12,234" }}</div>
+        <div class="stat-change" style="color: #10b981;">↗ +19.0% from last month</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f97316;">
+        <div class="stat-header">
+            <span class="stat-title">Active Customers</span>
+            <div class="stat-icon" style="background: rgba(249, 115, 22, 0.1); color: #f97316;">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="stat-value">+{{ active_customers|default:"573" }}</div>
+        <div class="stat-change" style="color: #ef4444;">↘ -2.0% from last month</div>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Sales Overview</h2>
+                <p class="card-subtitle">Monthly sales and order trends</p>
+            </div>
+        </div>
+        <div style="padding: 1.5rem; height: 300px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+            <div style="text-align: center;">
+                <i class="fas fa-chart-line" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>Sales chart would be displayed here</p>
+                <p style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">Implement with Chart.js or similar library</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header">
+            <div>
+                <h2 class="card-title">Sales by Category</h2>
+                <p class="card-subtitle">Distribution of sales across product categories</p>
+            </div>
+        </div>
+        <div style="padding: 1.5rem; height: 300px; display: flex; align-items: center; justify-content: center; color: #94a3b8;">
+            <div style="text-align: center;">
+                <i class="fas fa-chart-pie" style="font-size: 3rem; margin-bottom: 1rem; opacity: 0.5;"></i>
+                <p>Category breakdown chart would be displayed here</p>
+                <p style="font-size: 0.875rem; color: #64748b; margin-top: 0.5rem;">Implement with Chart.js or similar library</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card" style="margin-top: 2rem;">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">Top Selling Products</h2>
+            <p class="card-subtitle">Best performing products by sales volume</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Units Sold</th>
+                    <th>Revenue</th>
+                    <th>Trend</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Cotton T-Shirt</td>
+                    <td>CT001</td>
+                    <td>Men</td>
+                    <td>1,245</td>
+                    <td>$32,345.55</td>
+                    <td style="color: #10b981;">↗ +12%</td>
+                </tr>
+                <tr>
+                    <td>Denim Jeans</td>
+                    <td>DJ002</td>
+                    <td>Women</td>
+                    <td>876</td>
+                    <td>$70,042.24</td>
+                    <td style="color: #10b981;">↗ +8%</td>
+                </tr>
+                <tr>
+                    <td>Winter Jacket</td>
+                    <td>WJ005</td>
+                    <td>Men</td>
+                    <td>432</td>
+                    <td>$51,840.00</td>
+                    <td style="color: #ef4444;">↘ -3%</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

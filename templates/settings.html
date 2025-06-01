@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Manage your system preferences and configuration{% endblock %}
+
+{% block content %}
+<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+    <div></div>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn btn-secondary">Reset to Default</button>
+        <button class="btn btn-primary">
+            <i class="fas fa-save"></i> Save Changes
+        </button>
+    </div>
+</div>
+
+<div class="card" style="margin-bottom: 2rem;">
+    <div class="card-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-globe"></i>
+            </div>
+            <div>
+                <h2 class="card-title">General Settings</h2>
+                <p class="card-subtitle">Basic system configuration and company information</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 1.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+                <label class="form-label">Company Name</label>
+                <input type="text" class="form-input" value="Clothing ERP System">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Company Email</label>
+                <input type="email" class="form-input" value="admin@clothingerp.com">
+            </div>
+            <div class="form-group">
+                <label class="form-label">Timezone</label>
+                <select class="form-input">
+                    <option selected>UTC</option>
+                    <option>EST - Eastern Time</option>
+                    <option>PST - Pacific Time</option>
+                    <option>GMT - Greenwich Mean Time</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Default Currency</label>
+                <select class="form-input">
+                    <option selected>USD - US Dollar</option>
+                    <option>EUR - Euro</option>
+                    <option>GBP - British Pound</option>
+                    <option>CAD - Canadian Dollar</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+            <div class="stat-icon" style="background: rgba(139, 92, 246, 0.1); color: #8b5cf6;">
+                <i class="fas fa-palette"></i>
+            </div>
+            <div>
+                <h2 class="card-title">Appearance</h2>
+                <p class="card-subtitle">Customize the look and feel of your application</p>
+            </div>
+        </div>
+    </div>
+
+    <div style="padding: 1.5rem;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+            <div class="form-group">
+                <label class="form-label">Theme</label>
+                <select class="form-input">
+                    <option selected>Dark</option>
+                    <option>Light</option>
+                    <option>Auto</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Language</label>
+                <select class="form-input">
+                    <option selected>English</option>
+                    <option>Spanish</option>
+                    <option>French</option>
+                    <option>German</option>
+                </select>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

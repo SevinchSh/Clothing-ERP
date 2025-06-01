@@ -1,0 +1,169 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Overview of your clothing business{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" style="--accent-color: #3b82f6;">
+        <div class="stat-header">
+            <span class="stat-title">Total Products</span>
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-box"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ total_products|default:"1,234" }}</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f59e0b;">
+        <div class="stat-header">
+            <span class="stat-title">Low Stock Items</span>
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ low_stock_items|default:"23" }}</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f97316;">
+        <div class="stat-header">
+            <span class="stat-title">Pending Orders</span>
+            <div class="stat-icon" style="background: rgba(249, 115, 22, 0.1); color: #f97316;">
+                <i class="fas fa-shopping-cart"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ pending_orders|default:"45" }}</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #10b981;">
+        <div class="stat-header">
+            <span class="stat-title">Total Customers</span>
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ total_customers|default:"567" }}</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">Products</h2>
+            <p class="card-subtitle">Recent products in your inventory</p>
+        </div>
+        <div style="margin-left: auto; display: flex; gap: 1rem; align-items: center;">
+            <div class="search-box" style="margin-bottom: 0;">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="Search">
+            </div>
+            <a href="{% url 'products' %}" class="btn btn-primary">
+                <i class="fas fa-plus"></i> Add Product
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product Name</th>
+                    <th>SKU</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Stock</th>
+                    <th>Size</th>
+                    <th>Color</th>
+                    <th>Fabric</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in recent_products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.sku }}</td>
+                    <td>{{ product.category.name }}</td>
+                    <td>${{ product.price }}</td>
+                    <td>{{ product.stock_quantity }}</td>
+                    <td>{{ product.size }}</td>
+                    <td>{{ product.color }}</td>
+                    <td>{{ product.get_fabric_display }}</td>
+                    <td>
+                        {% if product.status == 'in_stock' %}
+                            <span class="badge badge-success">In Stock</span>
+                        {% elif product.status == 'low_stock' %}
+                            <span class="badge badge-warning">Low Stock</span>
+                        {% else %}
+                            <span class="badge badge-danger">Out of Stock</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>Cotton T-Shirt</td>
+                    <td>CT001</td>
+                    <td>Men</td>
+                    <td>$25.99</td>
+                    <td>150</td>
+                    <td>M</td>
+                    <td>Blue</td>
+                    <td>Cotton</td>
+                    <td><span class="badge badge-success">In Stock</span></td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Denim Jeans</td>
+                    <td>DJ002</td>
+                    <td>Women</td>
+                    <td>$79.99</td>
+                    <td>8</td>
+                    <td>L</td>
+                    <td>Dark Blue</td>
+                    <td>Denim</td>
+                    <td><span class="badge badge-warning">Low Stock</span></td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Kids Hoodie</td>
+                    <td>KH003</td>
+                    <td>Kids</td>
+                    <td>$35.99</td>
+                    <td>0</td>
+                    <td>S</td>
+                    <td>Red</td>
+                    <td>Cotton Blend</td>
+                    <td><span class="badge badge-danger">Out of Stock</span></td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

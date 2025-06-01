@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Monitor and manage your stock levels across all locations{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" style="--accent-color: #3b82f6;">
+        <div class="stat-header">
+            <span class="stat-title">Total Inventory Value</span>
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-dollar-sign"></i>
+            </div>
+        </div>
+        <div class="stat-value">${{ total_inventory_value|default:"3,950" }}</div>
+        <div class="stat-change">Across all locations</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f59e0b;">
+        <div class="stat-header">
+            <span class="stat-title">Low Stock Alerts</span>
+            <div class="stat-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ low_stock_alerts|default:"1" }}</div>
+        <div class="stat-change">Items need restocking</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #10b981;">
+        <div class="stat-header">
+            <span class="stat-title">Total SKUs</span>
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fas fa-boxes"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ total_skus|default:"2" }}</div>
+        <div class="stat-change">Unique products</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">Inventory Details</h2>
+            <p class="card-subtitle">Complete inventory across all locations</p>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>SKU</th>
+                    <th>Location</th>
+                    <th>Quantity</th>
+                    <th>Reserved</th>
+                    <th>Available</th>
+                    <th>Min Level</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in inventory_items %}
+                <tr>
+                    <td>{{ item.product.name }}</td>
+                    <td>{{ item.product.sku }}</td>
+                    <td>{{ item.location }}</td>
+                    <td>{{ item.quantity }}</td>
+                    <td>{{ item.reserved }}</td>
+                    <td>{{ item.available }}</td>
+                    <td>{{ item.min_level }}</td>
+                    <td>
+                        {% if item.available > item.min_level %}
+                            <span class="badge badge-success">In Stock</span>
+                        {% elif item.available <= 0 %}
+                            <span class="badge badge-danger">Out of Stock</span>
+                        {% else %}
+                            <span class="badge badge-warning">Low Stock</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>Cotton T-Shirt</td>
+                    <td>CT001</td>
+                    <td>Warehouse A</td>
+                    <td>150</td>
+                    <td>10</td>
+                    <td>140</td>
+                    <td>20</td>
+                    <td><span class="badge badge-success">In Stock</span></td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Denim Jeans</td>
+                    <td>DJ002</td>
+                    <td>Warehouse B</td>
+                    <td>8</td>
+                    <td>2</td>
+                    <td>6</td>
+                    <td>15</td>
+                    <td><span class="badge badge-danger">Low Stock</span></td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-secondary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-sync"></i>
+                            </button>
+                            <button class="btn btn-primary" style="padding: 0.25rem 0.5rem; font-size: 0.75rem;">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'base.html' %}
+
+{% block page_subtitle %}Manage system users and their permissions{% endblock %}
+
+{% block content %}
+<div class="stats-grid">
+    <div class="stat-card" style="--accent-color: #3b82f6;">
+        <div class="stat-header">
+            <span class="stat-title">Total Users</span>
+            <div class="stat-icon" style="background: rgba(59, 130, 246, 0.1); color: #3b82f6;">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ total_users|default:"3" }}</div>
+        <div class="stat-change">{{ total_users|default:"3" }} active users</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #dc2626;">
+        <div class="stat-header">
+            <span class="stat-title">Administrators</span>
+            <div class="stat-icon" style="background: rgba(220, 38, 38, 0.1); color: #dc2626;">
+                <i class="fas fa-user-shield"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ administrators|default:"1" }}</div>
+        <div class="stat-change">System administrators</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #10b981;">
+        <div class="stat-header">
+            <span class="stat-title">Managers</span>
+            <div class="stat-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fas fa-user-tie"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ managers|default:"1" }}</div>
+        <div class="stat-change">Department managers</div>
+    </div>
+
+    <div class="stat-card" style="--accent-color: #f97316;">
+        <div class="stat-header">
+            <span class="stat-title">Warehouse Staff</span>
+            <div class="stat-icon" style="background: rgba(249, 115, 22, 0.1); color: #f97316;">
+                <i class="fas fa-hard-hat"></i>
+            </div>
+        </div>
+        <div class="stat-value">{{ warehouse_staff|default:"1" }}</div>
+        <div class="stat-change">Warehouse operators</div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header">
+        <div>
+            <h2 class="card-title">System Users</h2>
+            <p class="card-subtitle">Manage user accounts and permissions</p>
+        </div>
+        <div style="margin-left: auto;">
+            <a href="#" class="btn btn-primary">
+                <i class="fas fa-user-plus"></i> Add User
+            </a>
+        </div>
+    </div>
+
+    <div class="table-container">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Last Login</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.get_full_name|default:user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>
+                        {% if user.userprofile.role == 'admin' %}
+                            <span class="badge badge-danger">Admin</span>
+                        {% elif user.userprofile.role == 'manager' %}
+                            <span class="badge badge-info">Manager</span>
+                        {% else %}
+                            <span class="badge badge-warning">Staff</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if user.is_active %}
+                            <span class="badge badge-success">Active</span>
+                        {% else %}
+                            <span class="badge badge-danger">Inactive</span>
+                        {% endif %}
+                    </td>
+                    <td>{{ user.last_login|timesince }} ago</td>
+                    <td>{{ user.date_joined|date:"m/d/Y" }}</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td>Admin User</td>
+                    <td>admin@example.com</td>
+                    <td><span class="badge badge-danger">Admin</span></td>
+                    <td><span class="badge badge-success">Active</span></td>
+                    <td>48m ago</td>
+                    <td>1/1/2024</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Manager User</td>
+                    <td>manager@example.com</td>
+                    <td><span class="badge badge-info">Manager</span></td>
+                    <td><span class="badge badge-success">Active</span></td>
+                    <td>2h ago</td>
+                    <td>1/15/2024</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Warehouse Staff</td>
+                    <td>staff@example.com</td>
+                    <td><span class="badge badge-warning">Staff</span></td>
+                    <td><span class="badge badge-success">Active</span></td>
+                    <td>1d ago</td>
+                    <td>2/1/2024</td>
+                    <td>
+                        <div class="actions-menu">
+                            <button class="actions-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
